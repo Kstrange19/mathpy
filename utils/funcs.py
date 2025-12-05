@@ -13,5 +13,3 @@ def algoritmo_euclides_estendido(a, b):
         r = s1 - (b // a) * r1
         s = r1
         return mdc, r, s
-
-print(algoritmo_euclides_estendido(8051, 3901))  # Exemplo de uso
