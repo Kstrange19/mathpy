@@ -87,7 +87,7 @@ def equacao_eliptica(a, b, m):
     for x in range(m):
         resultado = (x**3 + a * x + b) % m
         for y in range(m):
-            if (y * y) % p == resultado:
+            if (y * y) % m == resultado:
                 eixo_x.append(x)
                 eixo_y.append(y)
                 pontos.append((x, y))
