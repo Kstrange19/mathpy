@@ -45,7 +45,7 @@ eixo_x = []
 eixo_y = []
 pontos = []
 discriminante = lambda a, b, m: -16 * (4 * a**3 + 27 * b**2) % m
-j_invariante = lambda a, b, m: (-1728 * (4 * a ** 3) * inverso_modular(a, b, m) % m) if discriminante(a, b, m) != 0 else "Indefinido."
+j_invariante = lambda a, b, m: (-1728 * 16 * (4 * a ** 3) * inverso_modular(a, b, m) % m) if discriminante(a, b, m) != 0 else "Indefinido."
 
 def restos_quadraticos(m):
     """Retorna uma lista ordenada com os resíduos quadráticos módulo `mod`.
