@@ -103,8 +103,8 @@ def equacao_eliptica(a, b, m):
 def checar_singularidade(a, b, m):
     """Verifica se a curva elíptica é singular."""
     m = int(m)
-    discriminante(a, b, m)
-    return discriminante == 0
+    d = discriminante(a, b, m)
+    return d == 0
 
 def checar_isomorfismo(a1, b1, a2, b2, m):
     """Verifica se duas curvas elípticas são isomorfas."""
