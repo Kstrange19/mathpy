@@ -10,9 +10,9 @@ from utils.funcs import algoritmo_euclides_estendido
 
 opcoes = {
     '1': "Restos Quadráticos Modulares",
-    '1.1': "Ver calculo de resíduos quadráticos modulares",
+    '~ 1.1': "Ver calculo de resíduos quadráticos modulares",
     '2': "Visualizar pontos da Curva Elíptica",
-    '2.2': "Ver calculo da equação elíptica",
+    '~ 2.2': "Ver calculo da equação elíptica",
     '3': "Ver gráfico de dispersão",
     '4': "Checar singularidade",
     '5': "Checar isomorfismo",
