@@ -182,7 +182,7 @@ while True:
                 
                 print("~" * 30)
             # Exibe o total no final
-            print(f"\nNúmero total de pontos (incluindo o ponto no infinito): {total_pontos_encontrados}")
+            print(f"\nNúmero total de pontos (sem o ponto no infinito): {total_pontos_encontrados}")
         elif escolha == '3':
             d = discriminante(a, b, m)
             print(f"O discriminante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {d}")
