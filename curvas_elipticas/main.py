@@ -45,7 +45,7 @@ eixo_x = []
 eixo_y = []
 pontos = []
 discriminante = lambda a, b, m: -16 * (4 * a**3 + 27 * b**2) % m
-j_invariante = lambda a, b, m: (-1728 * 16 * (4 * a ** 3) * inverso_modular(a, b, m) % m) if discriminante(a, b, m) != 0 else "Indefinido."
+j_invariante = lambda a, b, m: (-1728 * 16 * (4 * a ** 3) * inverso_discriminante(a, b, m) % m) if discriminante(a, b, m) != 0 else "Indefinido."
 
 def restos_quadraticos(m):
     """Retorna uma lista ordenada com os resíduos quadráticos módulo `mod`.
@@ -69,7 +69,7 @@ def eh_residuo(n, m):
     r = int(n) % m
     return r in restos_quadraticos(m)
 
-def inverso_modular(a, b, m):
+def inverso_discriminante(a, b, m):
     """Retorna o inverso multiplicativo de a módulo mod, ou None se não existir."""
     a = int(a) % m
     b = int(b) % m
@@ -194,7 +194,7 @@ while True:
                 print("Como o discriminante é 0, o J-invariante é indefinido.")
             else:
                 print(f"J = -1728 * {4 * a**3} * inverso_modular(Δ, {m}) mod {m}")
-                inv = inverso_modular(a, b, m)
+                inv = inverso_discriminante(a, b, m)
                 print(f"Inverso modular de Δ mod {m} é: {inv}")
                 j_calc = (-1728 * (4 * a ** 3) * inv) % m
                 print(f"J = {j_calc}")
