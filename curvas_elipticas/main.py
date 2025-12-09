@@ -158,13 +158,31 @@ while True:
             print(f"Número total de pontos: {len(pontos)}")
             print("\n")
         elif escolha == '2.2':
+            total_pontos_encontrados = 0
+            
             for x in range(0, m):
                 resultado = (x ** 3 + a * x + b)
-                if resultado % m in restos_quadraticos(m):
-                    print(f"x = {x} => y² = x³ + {a}*{x} + {b} = {resultado} mod {m} = {resultado % m} ✅ -> ({x}, {resultado % m}) é um ponto da curva")
+                res_mod = resultado % m
+                
+                # Checa se o resultado é um resíduo quadrático
+                if res_mod in restos_quadraticos(m):
+                    
+                    # Encontra os valores de y (se existirem, geralmente 2, 1 ou 0)
+                    ys_encontrados = []
+                    for y_cand in range(m):
+                        if (y_cand * y_cand) % m == res_mod:
+                            ys_encontrados.append(y_cand)
+                    
+                    # Atualiza o contador de pontos (Geralmente é 2, exceto para y=0)
+                    total_pontos_encontrados += len(ys_encontrados)
+                    
+                    print(f"x = {x} => y² = {res_mod} ✅ -> Pontos encontrados: {[(x, y) for y in ys_encontrados]}")
                 else:
-                    print(f"x = {x} => y² = x³ + {a}*{x} + {b} = {resultado} mod {m} = {resultado % m} ❌ -> não é resíduo quadrático")
+                    print(f"x = {x} => y² = {res_mod} ❌ -> não é resíduo quadrático")
+                
                 print("~" * 30)
+            # Exibe o total no final
+            print(f"\nNúmero total de pontos (incluindo o ponto no infinito): {total_pontos_encontrados}")
         elif escolha == '3':
             d = discriminante(a, b, m)
             print(f"O discriminante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {d}")
