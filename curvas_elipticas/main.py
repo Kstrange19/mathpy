@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import sys
 import os
 
@@ -5,7 +6,6 @@ import os
 caminho_raiz = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(caminho_raiz)
 
-import matplotlib.pyplot as plt
 from utils.funcs import algoritmo_euclides_estendido
 
 opcoes = {
@@ -16,6 +16,8 @@ opcoes = {
     '3': "Ver gráfico de dispersão",
     '4': "Checar singularidade",
     '5': "Checar isomorfismo",
+    '6': "Calcular J-invariante",
+    '7': "Calcular discriminante",
     '0': "Sair"
 }
 
@@ -37,7 +39,7 @@ RQ = []
 eixo_x = []
 eixo_y = []
 pontos = []
-discriminante = lambda a, b: -16 * (4 * a**3 + 27 * b**2) % m
+discriminante = lambda a, b, m: -16 * (4 * a**3 + 27 * b**2) % m
 j_invariante = lambda a, b, m: (-1728 * (4 * a ** 3) * inverso_modular(a, b, m) % m) if discriminante(a, b) != 0 else "Indefinido."
 
 def restos_quadraticos(m):
@@ -96,7 +98,7 @@ def equacao_eliptica(a, b, m):
 def checar_singularidade(a, b, m):
     """Verifica se a curva elíptica é singular."""
     m = int(m)
-    discriminante(a, b)
+    discriminante(a, b, m)
     return discriminante == 0
 
 def checar_isomorfismo(a1, b1, a2, b2, m):
@@ -163,6 +165,14 @@ while True:
             a2 = int(input("Entre com o coeficiente `a` da segunda curva: "))
             b2 = int(input("Entre com o coeficiente `b` da segunda curva: "))
             checar_isomorfismo(a, b, a2, b2, m)
+            print("~" * 30)
+        elif escolha == '6':
+            j = j_invariante(a, b, m)
+            print(f"J-invariante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {j}")
+            print("~" * 30)
+        elif escolha == '7':
+            d = discriminante(a, b, m)
+            print(f"O discriminante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {d}")
             print("~" * 30)
         elif escolha == '0':
             print("Saindo do programa.")
