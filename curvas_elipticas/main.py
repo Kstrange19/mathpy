@@ -10,15 +10,20 @@ from utils.funcs import algoritmo_euclides_estendido
 
 opcoes = {
     '1': "Restos Quadráticos Modulares",
-    '~ 1.1': "Ver calculo de resíduos quadráticos modulares",
     '2': "Visualizar pontos da Curva Elíptica",
-    '~ 2.2': "Ver calculo da equação elíptica",
-    '3': "Ver gráfico de dispersão",
-    '4': "Checar singularidade",
+    '3': "Calcular discriminante",
+    '4': "Calcular J-invariante",
     '5': "Checar isomorfismo",
-    '6': "Calcular J-invariante",
-    '7': "Calcular discriminante",
+    '6': "Checar singularidade",
+    '7': "Ver gráfico de dispersão",
     '0': "Sair"
+}
+
+calculos = {
+    '1.1': "Cálculo de resíduos quadráticos modulares",
+    '2.2': "Cálculo da equação elíptica",
+    '3.3': "Cálculo do discriminante",
+    '4.4': "Cálculo do J-invariante"
 }
 
 def grafico_dispersao(eixo_x, eixo_y):
@@ -40,7 +45,7 @@ eixo_x = []
 eixo_y = []
 pontos = []
 discriminante = lambda a, b, m: -16 * (4 * a**3 + 27 * b**2) % m
-j_invariante = lambda a, b, m: (-1728 * (4 * a ** 3) * inverso_modular(a, b, m) % m) if discriminante(a, b) != 0 else "Indefinido."
+j_invariante = lambda a, b, m: (-1728 * (4 * a ** 3) * inverso_modular(a, b, m) % m) if discriminante(a, b, m) != 0 else "Indefinido."
 
 def restos_quadraticos(m):
     """Retorna uma lista ordenada com os resíduos quadráticos módulo `mod`.
@@ -69,7 +74,7 @@ def inverso_modular(a, b, m):
     a = int(a) % m
     b = int(b) % m
     m = int(m)
-    d = discriminante(a, b)
+    d = discriminante(a, b, m)
     if d == 0:
         return None
     mdc, r, s = algoritmo_euclides_estendido(d, m)
@@ -123,8 +128,13 @@ while True:
         a = int(a)
         b = int(b)
         m = int(m)
+        print("\n======== MENU DE OPÇÕES =======")
         for opcao in opcoes:
             print(f"{opcao}: {opcoes[opcao]}")
+        print("\n======== MENU DE CÁLCULOS DETALHADOS =======")
+        for calculo in calculos:
+            print(f"{calculo}: {calculos[calculo]}")
+        print("================================================\n")
         escolha = input("\nEscolha uma opção: ")
         if escolha == '1':
             residuos = restos_quadraticos(m)
@@ -152,28 +162,63 @@ while True:
                 else:
                     print(f"x = {x} => y² = x³ + {a}*{x} + {b} = {resultado} mod {m} = {resultado % m} ❌ -> não é resíduo quadrático")
                 print("~" * 30)
-            print("\n")
         elif escolha == '3':
-            grafico_dispersao(eixo_x, eixo_y)
+            d = discriminante(a, b, m)
+            print(f"O discriminante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {d}")
+            print("~" * 30)
+            print("\n")
+        elif escolha == '3.3':
+            disc = discriminante(a, b, m)
+            print(f"Cálculo do discriminante:")
+            print(f"Δ = -16(4a³ + 27b²) mod {m}")
+            print(f"Δ = -16(4*{a}³ + 27*{b}²) mod {m}")
+            print(f"Δ = -16({4 * a**3} + {27 * b**2}) mod {m}")
+            print(f"Δ = -16({4 * a**3 + 27 * b**2}) mod {m}")
+            print(f"Δ = {-16 * (4 * a**3 + 27 * b**2)} mod {m}")
+            print(f"Δ = {disc}")
+            print("~" * 30)
+            print("\n")
         elif escolha == '4':
+            j = j_invariante(a, b, m)
+            print(f"J-invariante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {j}")
+            print("~" * 30)
+            print("\n")
+        elif escolha == '4.4':
+            j = j_invariante(a, b, m)
+            print(f"Cálculo do J-invariante:")
+            print(f"J = -1728 * 4a³ / Δ mod {m}")
+            print(f"J = -1728 * 4*{a}³ / Δ mod {m}")
+            print(f"J = -1728 * {4 * a**3} / Δ mod {m}")
+            disc = discriminante(a, b, m)
+            if disc == 0:
+                print("Como o discriminante é 0, o J-invariante é indefinido.")
+            else:
+                print(f"J = -1728 * {4 * a**3} * inverso_modular(Δ, {m}) mod {m}")
+                inv = inverso_modular(a, b, m)
+                print(f"Inverso modular de Δ mod {m} é: {inv}")
+                j_calc = (-1728 * (4 * a ** 3) * inv) % m
+                print(f"J = {j_calc}")
+            print("~" * 30)
+            print("\n")
+        elif escolha == '5':
+            a2 = int(input("Entre com o coeficiente `a` da segunda curva: "))
+            b2 = int(input("Entre com o coeficiente `b` da segunda curva: "))
+            isomorfo = checar_isomorfismo(a, b, a2, b2, m)
+            if isomorfo:
+                print("As curvas são isomorfas.")
+            else:
+                print("As curvas não são isomorfas.")
+            print("~" * 30)
+            print("\n")
+        elif escolha == '6':
             if checar_singularidade(a, b, m):
                 print("A curva elíptica é singular.")
             else:
                 print("A curva elíptica não é singular.")
             print("~" * 30)
-        elif escolha == '5':
-            a2 = int(input("Entre com o coeficiente `a` da segunda curva: "))
-            b2 = int(input("Entre com o coeficiente `b` da segunda curva: "))
-            checar_isomorfismo(a, b, a2, b2, m)
-            print("~" * 30)
-        elif escolha == '6':
-            j = j_invariante(a, b, m)
-            print(f"J-invariante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {j}")
             print("~" * 30)
         elif escolha == '7':
-            d = discriminante(a, b, m)
-            print(f"O discriminante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {d}")
-            print("~" * 30)
+            grafico_dispersao(eixo_x, eixo_y)
         elif escolha == '0':
             print("Saindo do programa.")
             break
