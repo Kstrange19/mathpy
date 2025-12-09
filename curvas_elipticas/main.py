@@ -28,6 +28,9 @@ calculos = {
 
 def grafico_dispersao(eixo_x, eixo_y):
     """Plota um gráfico de dispersão dos pontos fornecidos nos eixos x e y."""
+    if not eixo_x or not eixo_y:
+        print("Nenhum ponto para plotar no gráfico de dispersão.")
+        return
     plt.scatter(eixo_x, eixo_y)
     plt.title(f"Gráfico de Dispersão com {len(pontos)} pontos")
     plt.xlabel("Eixo X")
