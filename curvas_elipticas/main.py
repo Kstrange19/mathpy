@@ -158,31 +158,35 @@ while True:
             print(f"Número total de pontos: {len(pontos)}")
             print("\n")
         elif escolha == '2.2':
-            total_pontos_encontrados = 0
+            total_pontos_encontrados = 0 
             
             for x in range(0, m):
                 resultado = (x ** 3 + a * x + b)
                 res_mod = resultado % m
                 
-                # Checa se o resultado é um resíduo quadrático
+                # Montamos a "string da fórmula" primeiro para não repetir código
+                # Isso cria aquele visual: x = 0 => y² = x³ + 30*0 + 15 = 15 mod 41 = 15
+                formula_visual = f"x = {x} => y² = {x}³ + {a}*{x} + {b} = {resultado} mod {m} = {res_mod}"
+
                 if res_mod in restos_quadraticos(m):
-                    
-                    # Encontra os valores de y (se existirem, geralmente 2, 1 ou 0)
                     ys_encontrados = []
+                    # Lógica para achar os y reais (raízes quadradas modulares)
                     for y_cand in range(m):
                         if (y_cand * y_cand) % m == res_mod:
                             ys_encontrados.append(y_cand)
                     
-                    # Atualiza o contador de pontos (Geralmente é 2, exceto para y=0)
                     total_pontos_encontrados += len(ys_encontrados)
                     
-                    print(f"x = {x} => y² = {res_mod} ✅ -> Pontos encontrados: {[(x, y) for y in ys_encontrados]}")
+                    # Adiciona o Check verde e a lista de pontos ao final da fórmula
+                    print(f"{formula_visual} ✅ -> Pontos: {[(x, y) for y in ys_encontrados]}")
                 else:
-                    print(f"x = {x} => y² = {res_mod} ❌ -> não é resíduo quadrático")
+                    # Adiciona o X vermelho
+                    print(f"{formula_visual} ❌ -> não é resíduo quadrático")
                 
                 print("~" * 30)
-            # Exibe o total no final
-            print(f"\nNúmero total de pontos (sem o ponto no infinito): {total_pontos_encontrados}")
+            
+            print(f"Número total de pontos encontrados: {total_pontos_encontrados}")
+            print("\n")
         elif escolha == '3':
             d = discriminante(a, b, m)
             print(f"O discriminante da curva elíptica y² = x³ + {a}x + {b} mod {m} é: {d}")
